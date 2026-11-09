@@ -14,4 +14,5 @@ lb config noauto \
   --iso-publisher "ORION OS Project" \
   --iso-volume "ORION_OS" \
   --apt-recommends true \
+  --security false \
   "${@}"
