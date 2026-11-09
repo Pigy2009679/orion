@@ -1,0 +1,12 @@
+{
+  "name": "ORION",
+  "short_name": "ORION",
+  "description": "A cross-platform desktop experience.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#edf1f8",
+  "theme_color": "#f4f6fb",
+  "icons": [{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
