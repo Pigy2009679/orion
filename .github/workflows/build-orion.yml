@@ -1,0 +1,51 @@
+name: Build ORION OS
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "ORION-OS/**"
+      - ".github/workflows/build-orion.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build Debian live ISO
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+
+    steps:
+      - name: Check out project
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
+            live-build debootstrap xorriso squashfs-tools \
+            syslinux syslinux-utils dosfstools mtools \
+            ca-certificates curl
+
+      - name: Build ORION OS
+        working-directory: ORION-OS
+        run: |
+          chmod +x build.sh
+          ./build.sh
+
+      - name: Verify ISO
+        working-directory: ORION-OS
+        run: |
+          test -s output/orion-os-amd64.iso
+          file output/orion-os-amd64.iso
+          ls -lh output/orion-os-amd64.iso
+
+      - name: Upload ISO artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: orion-os-amd64-iso
+          path: ORION-OS/output/orion-os-amd64.iso
+          if-no-files-found: error
+          retention-days: 14
