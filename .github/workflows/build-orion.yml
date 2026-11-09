@@ -33,7 +33,7 @@ jobs:
         working-directory: ORION-OS
         run: |
           chmod +x build.sh
-          ./build.sh
+          sudo ./build.sh
 
       - name: Verify ISO
         working-directory: ORION-OS
