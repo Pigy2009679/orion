@@ -14,5 +14,6 @@ lb config noauto \
   --iso-publisher "ORION OS Project" \
   --iso-volume "ORION_OS" \
   --apt-recommends true \
+  --firmware-chroot false \
   --security false \
   "${@}"
