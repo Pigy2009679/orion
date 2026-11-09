@@ -1,0 +1,15 @@
+{
+  "HomepageLocation": "file:///usr/share/orion/browser/newtab.html",
+  "RestoreOnStartup": 4,
+  "BookmarkBarEnabled": true,
+  "DefaultBrowserSettingEnabled": true,
+  "ManagedBookmarks": [
+    {
+      "name": "ORION links",
+      "children": [
+        {"name": "Debian", "url": "https://www.debian.org/"},
+        {"name": "ORION OS project", "url": "https://github.com/"}
+      ]
+    }
+  ]
+}

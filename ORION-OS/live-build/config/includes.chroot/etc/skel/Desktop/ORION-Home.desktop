@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=ORION Home
+Comment=Open the home folder
+Exec=thunar
+Icon=folder-home
+Terminal=false
+Categories=Utility;FileManager;

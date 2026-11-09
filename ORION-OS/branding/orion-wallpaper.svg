@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eaf4ff"/><stop offset=".55" stop-color="#c8dcff"/><stop offset="1" stop-color="#e6e8ff"/></linearGradient></defs>
+<rect width="1920" height="1080" fill="url(#bg)"/>
+<circle cx="1320" cy="400" r="245" fill="none" stroke="#4c83d8" stroke-width="5" opacity=".35"/>
+<circle cx="1320" cy="400" r="190" fill="none" stroke="#5b6fd6" stroke-width="3" opacity=".25"/>
+<path d="M1040 570 Q1320 170 1600 570" fill="none" stroke="#4c83d8" stroke-width="10" opacity=".35"/>
+<text x="130" y="850" font-family="sans-serif" font-size="108" font-weight="700" fill="#203c70">ORION OS</text>
+<text x="138" y="915" font-family="sans-serif" font-size="34" fill="#47618e">A clearer desktop experience</text>
+</svg>

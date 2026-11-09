@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+
+lb config noauto \
+  --mode debian \
+  --distribution trixie \
+  --architectures amd64 \
+  --archive-areas "main contrib non-free non-free-firmware" \
+  --binary-images iso-hybrid \
+  --debian-installer live \
+  --linux-flavours amd64 \
+  --bootappend-live "boot=live components quiet splash locales=en_US.UTF-8 keyboard-layouts=us" \
+  --iso-application "ORION OS" \
+  --iso-publisher "ORION OS Project" \
+  --iso-volume "ORION_OS" \
+  --apt-recommends true \
+  "${@}"

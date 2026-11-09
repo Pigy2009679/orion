@@ -1,0 +1,45 @@
+#!/bin/sh
+set -e
+
+echo "[ORION] Applying system identity and defaults..."
+
+mkdir -p /etc/orion
+cat > /etc/orion/version <<'EOF'
+ORION OS 1.0
+Based on Debian 13 (Trixie)
+EOF
+
+cat > /etc/issue <<'EOF'
+ORION OS 1.0
+EOF
+
+# Add a visible ORION identity without replacing Debian's package-managed
+# release metadata.
+cat > /usr/share/orion/os-info <<'EOF'
+ORION OS 1.0
+Debian 13 (Trixie)
+XFCE desktop
+EOF
+
+# Use the ORION wallpaper as the default XFCE desktop background.
+mkdir -p /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml
+cat > /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-desktop.xml <<'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<channel name="xfce4-desktop" version="1.0">
+  <property name="backdrop" type="empty">
+    <property name="screen0" type="empty">
+      <property name="monitor0" type="empty">
+        <property name="workspace0" type="empty">
+          <property name="last-image" type="string" value="/usr/share/backgrounds/orion/orion-wallpaper.svg"/>
+          <property name="image-style" type="int" value="5"/>
+        </property>
+      </property>
+    </property>
+  </property>
+</channel>
+EOF
+
+# Ensure the live session has a normal graphical login manager available.
+systemctl enable lightdm.service 2>/dev/null || true
+
+echo "[ORION] Configuration complete."

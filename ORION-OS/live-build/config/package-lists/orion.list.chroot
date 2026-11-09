@@ -1,0 +1,58 @@
+# ORION OS desktop and applications
+live-boot
+live-config
+live-config-systemd
+systemd-sysv
+task-xfce-desktop
+xfce4
+xfce4-goodies
+lightdm
+lightdm-gtk-greeter
+
+# Browser
+chromium
+
+# Network and Bluetooth
+network-manager
+network-manager-gnome
+bluez
+blueman
+wpasupplicant
+network-manager-openvpn
+
+# Sound and media
+pipewire
+pipewire-pulse
+wireplumber
+pavucontrol
+vlc
+
+# File management and utilities
+thunar
+thunar-archive-plugin
+thunar-volman
+xfce4-terminal
+mousepad
+ristretto
+xfce4-screenshooter
+xfce4-notifyd
+xfce4-power-manager
+xfce4-taskmanager
+xfce4-settings
+xfce4-appfinder
+firefox-esr
+htop
+curl
+wget
+git
+sudo
+ca-certificates
+fonts-dejavu-core
+fonts-noto-core
+fonts-liberation2
+papirus-icon-theme
+adwaita-icon-theme
+udisks2
+gvfs
+gvfs-backends
+policykit-1
