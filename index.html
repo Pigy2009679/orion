@@ -69,6 +69,7 @@ content.querySelectorAll('[data-app]').forEach(b=>b.addEventListener('click',()=
 content.querySelectorAll('[data-url]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.url)));
 $('#websearch')?.addEventListener('submit',e=>{e.preventDefault();go($('#query').value)});
 $('#browsersearch')?.addEventListener('submit',e=>{e.preventDefault();go($('#browserquery').value)});
+$('#filename')?.addEventListener('input',e=>e.target.setCustomValidity(''));
 $('#fileform')?.addEventListener('submit',e=>{e.preventDefault();const n=$('#filename').value.trim();if(!n)return;if(files.includes(n)){$('#filename').setCustomValidity('That item is already on your list.');$('#filename').reportValidity();return}files.unshift(n);safeSet('orion-files',JSON.stringify(files));render()});
 content.querySelectorAll('[data-delete]').forEach(b=>b.addEventListener('click',()=>{files.splice(Number(b.dataset.delete),1);safeSet('orion-files',JSON.stringify(files));render()}));
 $('#notepad')?.addEventListener('input',e=>{notes=e.target.value;$('#saved').textContent=safeSet('orion-notes',notes)?'Saved on this device':'Storage is unavailable in this browser'});
