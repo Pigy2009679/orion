@@ -1,4 +1,4 @@
-name: Deploy ORION
+name: ORION quality check and Pages deploy
 on:
   push:
     branches: [main, master]
@@ -18,29 +18,64 @@ concurrency:
   group: pages
   cancel-in-progress: true
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  validate:
     runs-on: ubuntu-latest
     steps:
       - name: Check out
         uses: actions/checkout@v4
-      - name: Validate app files
+      - name: Validate required files and manifest
         run: |
+          set -e
           test -s index.html
           test -s manifest.webmanifest
           test -s sw.js
           test -s icon.svg
           python3 -m json.tool manifest.webmanifest >/dev/null
+      - name: Check inline JavaScript syntax
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          html = Path('index.html').read_text(encoding='utf-8')
+          scripts = re.findall(r'<script(?:\s[^>]*)?>([\s\S]*?)</script>', html, re.I)
+          if not scripts:
+              raise SystemExit('No inline application script found')
+          Path('/tmp/orion-inline.js').write_text('\n'.join(scripts), encoding='utf-8')
+          PY
+          node --check /tmp/orion-inline.js
+      - name: Check service worker syntax
+        run: node --check sw.js
+      - name: Check SVG is well-formed
+        run: python3 -c "import xml.etree.ElementTree as E; E.parse('icon.svg')"
+      - name: Check whether GitHub Pages is enabled
+        id: pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          code=$(curl -sS -o /dev/null -w "%{http_code}" -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "$GITHUB_API_URL/repos/$GITHUB_REPOSITORY/pages")
+          if [ "$code" = "200" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          elif [ "$code" = "404" ]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::GitHub Pages is not enabled. Enable it in Settings > Pages and choose GitHub Actions. App checks passed."
+            echo "## ORION checks passed" >> "$GITHUB_STEP_SUMMARY"
+            echo "GitHub Pages is not enabled yet. In repository Settings > Pages, choose **GitHub Actions** as the build and deployment source. Push an update afterward to deploy." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Unexpected GitHub Pages API response: $code"
+            exit 1
+          fi
       - name: Configure Pages
+        if: steps.pages.outputs.enabled == 'true'
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
       - name: Upload site
+        if: steps.pages.outputs.enabled == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: .
       - name: Deploy to GitHub Pages
+        if: steps.pages.outputs.enabled == 'true'
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Deployment summary
+        if: steps.pages.outputs.enabled == 'true'
+        run: echo "ORION deployed to ${{ steps.deployment.outputs.page_url }}" >> "$GITHUB_STEP_SUMMARY"
