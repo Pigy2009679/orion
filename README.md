@@ -1,31 +1,38 @@
-# ORION OS
+# ORION
 
-ORION OS is a Debian 13 (Trixie) live Linux distribution project.
+ORION is a cross-platform, installable desktop-style web app designed for Windows, Android, and iPhone.
 
-The Linux project files are in the **ORION-OS/** folder. The GitHub Actions
-workflow is stored at the repository root in **.github/workflows/** so GitHub
-can detect and run it.
+## Try it
 
-## Build the ISO
+Open the repository's GitHub Pages site after Pages deployment is enabled. You can also run it locally by opening `index.html` in a browser. For full install/offline support, serve it over HTTPS (GitHub Pages does this automatically).
 
-1. Open the **Actions** tab.
-2. Select **Build ORION OS**.
-3. Choose **Run workflow** and confirm.
-4. Wait for the build to finish.
-5. Open the completed run and download the **orion-os-amd64-iso** artifact.
+## Current features
 
-The artifact contains `orion-os-amd64.iso`.
+- Responsive desktop layout for computers and touch-first mobile layout
+- Home screen, dock, app windows, minimize, maximize, and close
+- ORION Browser launcher with web search and site shortcuts (external pages open in a new tab)
+- Files list stored locally in the browser
+- Notes with automatic local saving
+- Calculator
+- Light/dark appearance and accent color settings
+- PWA manifest and service worker for installability and offline app shell
 
-## What it includes
+## Install
 
-- Debian 13 (Trixie) base and the real Linux kernel
-- XFCE desktop environment
-- Chromium browser with ORION policies and a custom start page
-- Network, Bluetooth, audio, file manager, terminal, and system utilities
-- ORION wallpaper, logo, and desktop branding
+- **Windows:** Open the deployed site in Edge or Chrome and choose Install this site as an app.
+- **Android:** Open the site in Chrome, open the browser menu, and choose Install app / Add to Home screen.
+- **iPhone:** Open the site in Safari, tap Share, then Add to Home Screen.
 
-This is an initial Debian-based OS foundation. It customizes existing Linux
-components; it is not yet a fully independent desktop environment or browser.
+Exact labels vary by browser and OS version.
 
-See [ORION-OS/README.md](ORION-OS/README.md) for project details and local build
-instructions.
+## Important limitations
+
+ORION is an app running inside the browser, not a replacement operating system. Its Files app stores app-created entries locally; it does not browse the phone or PC file system. The Browser app launches external websites in new tabs rather than embedding every site. Native device integrations, true multi-window OS controls, push notifications, and app-store packaging are future work.
+
+## Project structure
+
+- `index.html` — application UI and interactions
+- `manifest.webmanifest` — install metadata
+- `sw.js` — offline application shell
+- `icon.svg` — app icon
+- `.github/workflows/deploy-pages.yml` — GitHub Pages deployment
