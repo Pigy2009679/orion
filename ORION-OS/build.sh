@@ -38,7 +38,8 @@ lb config \
   --iso-application "ORION OS" \
   --iso-publisher "ORION OS Project" \
   --iso-volume "ORION_OS" \
-  --apt-recommends true
+  --apt-recommends true \
+  --security false
 
 echo "[ORION] Building ISO. This can take a while..."
 set +e
