@@ -9,6 +9,14 @@ xfce4-goodies
 lightdm
 lightdm-gtk-greeter
 
+# Firmware packages (avoid live-build's outdated Contents index lookup)
+firmware-linux
+firmware-linux-nonfree
+firmware-misc-nonfree
+firmware-iwlwifi
+firmware-realtek
+firmware-amd-graphics
+
 # Browser
 chromium
 
